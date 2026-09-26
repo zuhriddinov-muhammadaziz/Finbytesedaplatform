@@ -5,53 +5,109 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FinBytes | Alert Behaviour Research</title>
   <style>
-    :root { --ink:#1D3029; --muted:#7A8D83; --navy:#0E2B22; --green:#2D7459; --line:#DDE5DC; --paper:#F4F6F5; --blue:#2D7459; --red:#D4870D; }
+    :root { --ink:#202A29; --muted:#75817F; --navy:#073D3A; --green:#087E75; --line:#E5E9E8; --paper:#F3F5F5; --blue:#087E75; --red:#B65D5D; }
     * { box-sizing:border-box; }
-    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif; }
-    .layout { display:grid; grid-template-columns:250px minmax(0,1fr); min-height:100vh; }
-    aside { background:#0E2B22; color:#C8DDD4; padding:22px 17px; position:sticky; top:0; height:100vh; overflow-y:auto; }
-    .brand { display:flex; align-items:center; gap:10px; padding:4px 6px 18px; border-bottom:1px solid #ffffff18; margin-bottom:12px; }
-    .brand-mark { width:32px; height:32px; display:grid; place-items:center; border-radius:7px; background:#2D7459; color:#fff; font-weight:800; }
-    .brand-name { color:#E8F3EE; font-size:.86rem; font-weight:800; }
-    .brand-sub { color:#7CA898; font-size:.59rem; letter-spacing:.1em; text-transform:uppercase; }
-    .nav-group { color:#5A8070; font-size:.58rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:12px 9px 4px; }
-    nav button { display:flex; align-items:center; gap:8px; width:100%; border:0; background:transparent; color:#9DBDB3; text-align:left; padding:8px 9px; border-radius:7px; cursor:pointer; font:inherit; font-size:.78rem; font-weight:600; }
-    nav button:hover { background:#ffffff12; color:#E8F3EE; }
-    nav button.active { background:#2D7459; color:#fff; box-shadow:0 4px 12px #2D745959; }
-    nav button .nav-index { width:20px; color:#7CA898; font-size:.64rem; }
-    nav button.active .nav-index { color:#D8EEE2; }
-    .scope { margin-top:18px; padding:10px; border:1px solid #ffffff12; border-radius:7px; color:#9DBDB3; font-size:.7rem; line-height:1.55; }
-    .scope strong { display:block; margin-bottom:4px; color:#5A8070; font-size:.58rem; letter-spacing:.1em; text-transform:uppercase; }
-    main { max-width:1300px; width:100%; margin:0 auto; padding:27px clamp(18px,3vw,42px) 48px; }
-    .kpi-strip { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:13px; margin-bottom:24px; }
-    .kpi { position:relative; overflow:hidden; background:#fff; border:1px solid var(--line); border-radius:12px; padding:15px 17px; box-shadow:0 2px 10px #1332260a; }
-    .kpi:before { content:""; position:absolute; inset:0 auto 0 0; width:4px; background:linear-gradient(#2D7459,#4FAE9A); }
-    .kpi-label { color:var(--muted); font-size:.64rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
-    .kpi-value { color:#0E2B22; font-size:1.72rem; font-weight:780; letter-spacing:-.04em; line-height:1.2; margin-top:4px; }
-    .kpi-sub { color:#9AABA3; font-size:.67rem; }
-    .page-header { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; border-bottom:2px solid var(--line); padding:0 0 16px; margin-bottom:12px; }
-    .eyebrow { color:var(--green); font-size:.63rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
-    .page-title { color:#0E2B22; font-size:clamp(1.55rem,2.5vw,2rem); font-weight:760; line-height:1.15; letter-spacing:-.04em; margin:5px 0; }
-    .page-desc { max-width:680px; color:#62766C; font-size:.85rem; line-height:1.6; margin:0; }
-    .page-badge { flex:0 0 auto; border:1px solid #C4DCCE; border-radius:7px; background:#EBF5F0; color:#2D7459; padding:6px 10px; font-size:.62rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:14px/1.55 Inter,"Segoe UI",system-ui,sans-serif; }
+    .layout { display:grid; grid-template-columns:224px minmax(0,1fr); min-height:100vh; max-width:1800px; margin:0 auto; background:#fff; }
+    aside { background:#fff; color:var(--ink); padding:23px 17px; position:sticky; top:0; height:100vh; border-right:1px solid var(--line); overflow-y:auto; }
+    .brand { display:flex; align-items:center; gap:9px; padding:1px 4px 22px; border-bottom:1px solid var(--line); margin-bottom:20px; }
+    .brand-mark { width:29px; height:29px; display:grid; place-items:center; border-radius:5px; background:#087E75; color:#fff; font-size:.8rem; font-weight:800; }
+    .brand-name { color:#202A29; font-size:.91rem; font-weight:720; letter-spacing:-.03em; }
+    .brand-sub { color:#87918E; font-size:.56rem; letter-spacing:.1em; text-transform:uppercase; }
+    .nav-group { color:#65716E; font-size:.62rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:8px 8px 7px; }
+    nav button { display:flex; align-items:center; gap:9px; width:100%; border:0; background:transparent; color:#475350; text-align:left; padding:9px 9px; margin:2px 0; border-radius:6px; cursor:pointer; font:inherit; font-size:.76rem; font-weight:520; }
+    nav button:hover { background:#F2F7F6; color:#086E67; }
+    nav button.active { background:#064B47; color:#fff; box-shadow:0 2px 5px #062f2c19; }
+    nav button .nav-index { display:grid; place-items:center; width:17px; height:17px; border:1px solid #DCE4E2; border-radius:4px; color:#71807C; font-size:.56rem; }
+    nav button.active .nav-index { border-color:#ffffff50; color:#fff; }
+    .scope { margin-top:20px; padding:10px 9px; border:1px solid var(--line); border-radius:6px; color:#65716E; font-size:.68rem; line-height:1.55; }
+    .scope strong { display:block; margin-bottom:4px; color:#35413E; font-size:.61rem; letter-spacing:.06em; text-transform:uppercase; }
+    main { min-width:0; width:100%; padding:0 clamp(20px,3vw,44px) 42px; }
+    .topbar { min-height:76px; display:flex; justify-content:space-between; align-items:center; gap:20px; border-bottom:1px solid var(--line); margin-bottom:20px; }
+    .welcome-title { color:#222C2A; font-size:1.02rem; font-weight:620; letter-spacing:-.025em; }
+    .welcome-subtitle { color:#78837F; font-size:.7rem; margin-top:2px; }
+    .topbar-tools { display:flex; align-items:center; gap:9px; }
+    .search-wrap { position:relative; margin-right:5px; }
+    .search-box { width:min(270px,28vw); height:35px; border:1px solid var(--line); border-radius:5px; background:#FAFBFB; padding:0 12px; color:#283330; font:inherit; font-size:.7rem; outline:none; }
+    .search-box:focus { border-color:#87BDB6; box-shadow:0 0 0 3px #087E7512; }
+    .search-results { display:none; position:absolute; z-index:5; right:0; top:40px; width:min(300px,80vw); padding:5px; background:#fff; border:1px solid var(--line); border-radius:6px; box-shadow:0 10px 26px #202a291c; }
+    .search-results.open { display:block; }
+    .search-result { display:block; width:100%; border:0; border-radius:4px; padding:9px 10px; background:#fff; text-align:left; color:#35413E; cursor:pointer; font:inherit; font-size:.72rem; }
+    .search-result:hover { background:#F1F7F6; color:#086E67; }
+    .icon-button { display:grid; place-items:center; width:33px; height:33px; border:1px solid #DDE4E3; border-radius:50%; background:#fff; color:#3D4946; cursor:pointer; }
+    .icon-button:hover { border-color:#82B4AD; background:#F4F8F7; color:#087E75; }
+    .avatar { display:grid; place-items:center; width:30px; height:30px; border-radius:50%; margin-left:3px; background:#DCEBE8; color:#07544F; font-size:.66rem; font-weight:700; }
+    .view-toolbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:22px 0 16px; }
+    .view-toolbar h1 { margin:0; color:#202A29; font-size:1.42rem; font-weight:570; letter-spacing:-.045em; }
+    .period-select { min-width:94px; height:32px; padding:0 9px; border:1px solid #DDE4E3; border-radius:5px; background:#fff; color:#384542; font:inherit; font-size:.69rem; }
+    .kpi-strip { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:13px 0 17px; }
+    .kpi { min-width:0; position:relative; background:#fff; border:1px solid var(--line); border-radius:8px; padding:14px 15px; }
+    .kpi-label { color:#6F7B78; font-size:.66rem; font-weight:560; }
+    .kpi-value { color:#222B2A; font-size:1.64rem; font-weight:560; letter-spacing:-.055em; line-height:1.25; margin-top:3px; }
+    .kpi-sub { color:#7A8682; font-size:.63rem; margin-top:5px; }
+    .trend { float:right; padding:2px 5px; border-radius:3px; background:#E8F3EF; color:#23705A; font-size:.56rem; }
+    .trend.warn { background:#F9EEEE; color:#A35454; }
+    .page-header { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; border-bottom:1px solid var(--line); padding:0 0 12px; margin:24px 0 15px; }
+    .eyebrow { color:#72807C; font-size:.58rem; font-weight:650; letter-spacing:.1em; text-transform:uppercase; }
+    .page-title { color:#202A29; font-size:1.13rem; font-weight:580; line-height:1.3; letter-spacing:-.025em; margin:3px 0; }
+    .page-desc { max-width:680px; color:#78837F; font-size:.72rem; line-height:1.55; margin:0; }
+    .page-badge { flex:0 0 auto; border:1px solid #E1E7E5; border-radius:4px; background:#FAFBFB; color:#687571; padding:5px 8px; font-size:.58rem; font-weight:570; letter-spacing:.035em; }
     #content > h2 { display:none; }
-    #content > p { color:#62766C; line-height:1.65; }
-    .callout { background:#EBF5F0; border:1px solid #C4DCCE; border-left:4px solid #2D7459; color:#2B5041; padding:13px 16px; border-radius:0 9px 9px 0; margin:13px 0 17px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:12px; margin:14px 0; }
-    .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:15px; box-shadow:0 2px 9px #13322608; }
-    .card .label { color:var(--muted); font-size:.75rem; }
-    .card .value { color:#0E2B22; font-size:1.38rem; font-weight:720; margin-top:5px; overflow-wrap:anywhere; }
-    .chart { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; margin:14px 0; box-shadow:0 2px 9px #13322608; }
-    .chart h3 { font-size:.9rem; margin:0 0 12px; color:#0E2B22; }
-    .bar { display:grid; grid-template-columns:minmax(90px,1fr) 3fr 72px; gap:10px; align-items:center; margin:9px 0; font-size:.8rem; }
-    .track { display:block; height:8px; background:#EEF2EE; border-radius:99px; overflow:hidden; }
-    .fill { display:block; height:100%; background:linear-gradient(90deg,#2D7459,#4FAE9A); border-radius:99px; }
-    table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden; display:table; }
-    th,td { text-align:left; padding:10px 12px; border-bottom:1px solid #EEF2EE; font-size:.82rem; }
-    th { color:#2B5041; background:#F0F5F2; font-size:.67rem; letter-spacing:.06em; text-transform:uppercase; }
-    footer { color:var(--muted); border-top:1px solid var(--line); margin-top:30px; padding-top:16px; font-size:.78rem; }
-    @media (max-width:900px) { .layout { grid-template-columns:210px minmax(0,1fr); } aside { padding:18px 12px; } main { padding:22px 17px 38px; } }
-    @media (max-width:680px) { .layout { display:block; } aside { position:static; height:auto; padding:14px; } .brand { padding-bottom:10px; margin-bottom:6px; } nav { display:flex; overflow-x:auto; gap:5px; padding:5px 0; } .nav-group,.scope { display:none; } nav button { flex:0 0 auto; width:auto; min-width:max-content; padding:8px; } main { padding:16px 13px 32px; } .kpi-strip { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; } .kpi { padding:12px; } .kpi-value { font-size:1.4rem; } .page-header { flex-direction:column; gap:8px; } }
+    #content > p { color:#65716E; line-height:1.65; }
+    .callout { background:#F1F7F4; border:1px solid #E2EBE6; border-left:3px solid #087E75; color:#425650; padding:11px 14px; border-radius:3px 6px 6px 3px; margin:11px 0 14px; font-size:.75rem; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px; margin:12px 0; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:7px; padding:13px; }
+    .card .label { color:#78837F; font-size:.68rem; }
+    .card .value { color:#27312F; font-size:1.19rem; font-weight:600; margin-top:5px; overflow-wrap:anywhere; }
+    .chart,.panel { min-width:0; background:#fff; border:1px solid var(--line); border-radius:8px; padding:15px 16px; }
+    .chart { margin:10px 0; }
+    .chart h3,.panel h3 { font-size:.79rem; font-weight:620; margin:0; color:#293330; }
+    .panel-sub { color:#87918E; font-size:.63rem; margin:3px 0 12px; }
+    .dashboard-grid { display:grid; grid-template-columns:minmax(250px,.9fr) minmax(0,1.45fr); gap:13px; margin:10px 0; }
+    .dashboard-grid.equal { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .dashboard-grid.triple { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .donut-layout { display:flex; align-items:center; justify-content:center; gap:20px; min-height:195px; }
+    .donut { display:grid; place-items:center; width:142px; height:142px; flex:0 0 auto; border-radius:50%; }
+    .donut-center { display:grid; place-content:center; width:94px; height:94px; border-radius:50%; background:#fff; text-align:center; }
+    .donut-value { color:#222B2A; font-size:1.24rem; font-weight:620; letter-spacing:-.04em; }
+    .donut-caption { color:#83908B; font-size:.61rem; }
+    .legend { display:grid; gap:11px; min-width:115px; }
+    .legend-row { display:grid; grid-template-columns:9px 1fr; gap:7px; align-items:center; color:#596661; font-size:.66rem; }
+    .legend-row strong { grid-column:2; color:#26312E; font-size:.76rem; font-weight:610; }
+    .legend-dot { width:8px; height:8px; border-radius:50%; background:#087E75; }
+    .legend-dot.soft { background:#B7D8D1; }
+    .bar-chart { display:flex; align-items:flex-end; justify-content:space-around; gap:5px; height:174px; padding:14px 0 0; border-bottom:1px solid #DAE1DF; }
+    .bar-column { display:flex; flex:1; min-width:0; height:100%; align-items:center; flex-direction:column; justify-content:flex-end; gap:5px; }
+    .bar-value { color:#78847F; font-size:.54rem; white-space:nowrap; }
+    .bar-fill { width:min(28px,72%); min-height:3px; border-radius:4px 4px 0 0; background:#087E75; transition:height .2s ease; }
+    .bar-fill.soft { background:#9FCAC2; }
+    .bar-label { color:#7D8885; font-size:.53rem; line-height:1.2; padding-bottom:6px; white-space:nowrap; }
+    .dark-panel { min-height:100%; padding:17px; border-radius:8px; background:#064B47; color:#E8F2F0; }
+    .dark-panel .panel-sub { color:#B8D2CE; }
+    .dark-panel h3 { color:#fff; }
+    .dark-score { margin:14px 0 8px; color:#fff; font-size:2.1rem; font-weight:530; letter-spacing:-.06em; }
+    .dark-detail { border-top:1px solid #ffffff28; padding-top:10px; color:#D2E3E0; font-size:.67rem; line-height:1.65; }
+    .direction-row { display:grid; grid-template-columns:110px 1fr 70px; gap:8px; align-items:center; margin:13px 0; color:#596661; font-size:.65rem; }
+    .direction-track { height:7px; overflow:hidden; border-radius:99px; background:#EEF2F1; }
+    .direction-track span { display:block; height:100%; border-radius:99px; background:#087E75; }
+    .direction-track span.soft { background:#A8CCC4; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:7px; background:#fff; }
+    table { width:100%; border-collapse:collapse; background:#fff; }
+    th,td { text-align:left; padding:10px 12px; border-bottom:1px solid #EDF0EF; font-size:.72rem; white-space:nowrap; }
+    th { color:#687571; background:#F7F8F8; font-size:.6rem; font-weight:650; letter-spacing:.045em; text-transform:uppercase; }
+    tbody tr:hover { background:#F7FAF9; }
+    .status-pill { display:inline-block; padding:3px 7px; border-radius:99px; background:#EAF3F0; color:#27705E; font-size:.6rem; }
+    .status-pill.neutral { background:#F1F3F2; color:#687571; }
+    .table-toolbar { display:flex; justify-content:space-between; align-items:center; gap:10px; margin:12px 0; }
+    .table-search { width:min(250px,55vw); height:31px; padding:0 9px; border:1px solid var(--line); border-radius:4px; font:inherit; font-size:.68rem; }
+    .chart-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:11px 0; }
+    .validation-row { display:grid; grid-template-columns:84px minmax(60px,1fr) 55px; align-items:center; gap:10px; margin:15px 0; color:#586460; font-size:.67rem; }
+    .validation-track { height:8px; background:#EEF2F1; border-radius:99px; overflow:hidden; }
+    .validation-track span { display:block; height:100%; border-radius:99px; background:#087E75; }
+    .empty-state { padding:18px; text-align:center; color:#7D8885; font-size:.74rem; }
+    footer { color:var(--muted); border-top:1px solid var(--line); margin-top:24px; padding-top:13px; font-size:.68rem; }
+    @media (max-width:1000px) { .layout { grid-template-columns:190px minmax(0,1fr); } aside { padding:18px 12px; } main { padding-right:20px; padding-left:20px; } .dashboard-grid.triple { grid-template-columns:repeat(2,minmax(0,1fr)); } .search-box { width:190px; } }
+    @media (max-width:720px) { .layout { display:block; } aside { position:static; height:auto; padding:12px 14px 8px; border-right:0; border-bottom:1px solid var(--line); } .brand { padding-bottom:9px; margin-bottom:7px; } nav { display:flex; overflow-x:auto; gap:4px; padding:4px 0 7px; } .nav-group,.scope { display:none; } nav button { flex:0 0 auto; width:auto; min-width:max-content; padding:7px 8px; } main { padding:0 13px 28px; } .topbar { min-height:62px; margin-bottom:14px; } .welcome-subtitle,.icon-button { display:none; } .search-box { width:35vw; } .avatar { display:none; } .view-toolbar { align-items:flex-start; } .view-toolbar h1 { font-size:1.18rem; } .kpi-strip { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; } .kpi { padding:11px; } .kpi-value { font-size:1.3rem; } .dashboard-grid,.dashboard-grid.equal,.dashboard-grid.triple,.chart-grid { grid-template-columns:1fr; } .page-header { flex-direction:column; align-items:flex-start; gap:7px; } .donut-layout { justify-content:flex-start; min-height:160px; } }
   </style>
 </head>
 <body>
@@ -62,11 +118,28 @@
         <div><div class="brand-name">FinBytes</div><div class="brand-sub">EDA Report</div></div>
       </div>
       <nav id="nav"></nav>
-      <div class="scope"><strong>Data scope</strong>Aggregate summaries only<br>No individual records exposed</div>
+        <div class="scope"><strong>Published data</strong>Aggregate summaries only<br>No individual records or transactions</div>
     </aside>
     <main>
-      <div class="kpi-strip" id="kpis"></div>
-      <div class="page-header">
+        <header class="topbar">
+          <div><div class="welcome-title">Welcome to FinBytes</div><div class="welcome-subtitle">Clear, time-aware insights into alert activity</div></div>
+          <div class="topbar-tools">
+            <div class="search-wrap">
+              <input class="search-box" id="global-search" type="search" placeholder="Search views or monthly activity" aria-label="Search dashboard views or months" autocomplete="off">
+              <div class="search-results" id="search-results" role="listbox"></div>
+            </div>
+            <button class="icon-button" id="scope-button" title="Data privacy information" aria-label="Data privacy information">i</button>
+            <div class="avatar" title="FinBytes analysis">F</div>
+          </div>
+        </header>
+        <div class="view-toolbar">
+          <h1 id="view-heading">Alert insights dashboard</h1>
+          <select class="period-select" id="period-select" aria-label="Filter by year">
+            <option value="2026">2026</option><option value="2025">2025</option><option value="all">All dates</option>
+          </select>
+        </div>
+        <div class="kpi-strip" id="kpis"></div>
+        <div class="page-header">
         <div>
           <div class="eyebrow" id="page-eyebrow">REPORT OVERVIEW</div>
           <h1 class="page-title" id="page-title">What activity comes before an alert?</h1>
@@ -1379,46 +1452,170 @@
       ["conclusion", "Conclusion", "CONCLUSION", "Summarize the validated approach and the limitations of this aggregate report."]
     ];
     const nav = document.querySelector("#nav"), content = document.querySelector("#content");
-    const kpis = document.querySelector("#kpis");
-    chapters.forEach(([id, label], i) => {
-      if (i === 0 || i === 3 || i === 9) {
-        const group = document.createElement("div");
-        group.className = "nav-group";
-        group.textContent = i === 0 ? "Introduction" : i === 3 ? "EDA Analysis" : "Conclusions";
-        nav.appendChild(group);
-      }
+    const kpis = document.querySelector("#kpis"), periodSelect = document.querySelector("#period-select");
+    const viewHeading = document.querySelector("#view-heading"), globalSearch = document.querySelector("#global-search");
+    const searchResults = document.querySelector("#search-results");
+    const yearFilter = () => periodSelect.value;
+    const addNavigationItem = (id, label, number) => {
       const button = document.createElement("button");
-      button.innerHTML = `<span class="nav-index">${String(i + 1).padStart(2, "0")}</span>${label}`;
+      button.innerHTML = `<span class="nav-index">${number}</span>${label}`;
       button.dataset.id = id;
-      button.onclick = () => select(id); nav.appendChild(button);
+      button.onclick = () => select(id);
+      nav.appendChild(button);
+    };
+    const mainGroup = document.createElement("div");
+    mainGroup.className = "nav-group";
+    mainGroup.textContent = "Main menu";
+    nav.appendChild(mainGroup);
+    addNavigationItem("dashboard", "Dashboard", "01");
+    addNavigationItem("analytics", "Analytics", "02");
+    addNavigationItem("transactions", "Transactions", "03");
+    addNavigationItem("method", "Model validation", "04");
+    const chapterGroup = document.createElement("div");
+    chapterGroup.className = "nav-group";
+    chapterGroup.textContent = "Report sections";
+    nav.appendChild(chapterGroup);
+    chapters.forEach(([id, label], i) => {
+      addNavigationItem(id, label, String(i + 1).padStart(2, "0"));
     });
     const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
     const fmt = v => typeof v === "number" ? v.toLocaleString(undefined, {maximumFractionDigits:2}) : esc(v);
     const card = (label, value) => `<div class="card"><div class="label">${esc(label)}</div><div class="value">${fmt(value)}</div></div>`;
     const cards = rows => `<div class="grid">${rows.map(x => card(x[0], x[1])).join("")}</div>`;
+    const filteredMonthly = rows => rows.filter(row => yearFilter() === "all" || row.month.startsWith(yearFilter()));
+    function monthBars(rows, labelKey, valueKey, limit = 12, soft = false) {
+      const data = rows.slice(-limit);
+      if (!data.length) return `<div class="empty-state">No aggregate activity for this period.</div>`;
+      const maximum = Math.max(...data.map(row => Number(row[valueKey]) || 0), 1);
+      return `<div class="bar-chart" role="img" aria-label="Monthly activity bar chart">${data.map(row => {
+        const value = Number(row[valueKey]) || 0;
+        const height = Math.max(2, value / maximum * 100);
+        return `<div class="bar-column" title="${esc(row[labelKey])}: ${fmt(value)}"><span class="bar-value">${fmt(value)}</span><span class="bar-fill${soft ? " soft" : ""}" style="height:${height}%"></span><span class="bar-label">${esc(String(row[labelKey]).slice(5))}</span></div>`;
+      }).join("")}</div>`;
+    }
+    function transactionTable(rows) {
+      if (!rows.length) return `<tr><td colspan="4" class="empty-state">No months match your search.</td></tr>`;
+      return rows.map(row => `<tr data-month="${row.month}"><td>${esc(row.month)}</td><td>${fmt(row.count)}</td><td>${fmt(window.report.target.monthly.find(item => item.month === row.month)?.signals ?? "—")}</td><td><span class="status-pill">Aggregate only</span></td></tr>`).join("");
+    }
+    function renderKpis() {
+      const d = window.report.dataset, t = window.report.target, method = window.report.method.model_evaluation || {};
+      const escalated = t.counts.find(row => row.class === 1)?.count || 0;
+      const dismissed = t.counts.find(row => row.class === 0)?.count || 0;
+      const percentage = (escalated / Math.max(d.train_signals, 1) * 100).toFixed(1);
+      const metrics = [
+        ["Labeled alerts", fmt(d.train_signals), "Training observations", ""],
+        ["Training transactions", `${(d.train_transaction_rows / 1000000).toFixed(2)}M`, "Linked transaction rows", ""],
+        ["Escalation rate", `${percentage}%`, `${fmt(escalated)} escalated · ${fmt(dismissed)} dismissed`, "warn"],
+        ["Forward OOF ROC-AUC", method.oof_roc_auc?.toFixed(4) || "—", "Five chronological folds", ""]
+      ];
+      kpis.innerHTML = metrics.map(([label, value, sub, trend]) => `<div class="kpi"><span class="trend${trend ? ` ${trend}` : ""}">${label === "Escalation rate" ? "Minority class" : label === "Forward OOF ROC-AUC" ? "5 folds" : "Aggregate"}</span><div class="kpi-label">${label}</div><div class="kpi-value">${value}</div><div class="kpi-sub">${sub}</div></div>`).join("");
+    }
+    function donutPanel(firstLabel, firstValue, secondLabel, secondValue, totalLabel) {
+      const total = firstValue + secondValue;
+      const firstPercent = total ? firstValue / total * 100 : 0;
+      const secondPercent = 100 - firstPercent;
+      return `<div class="donut-layout"><div class="donut" style="background:conic-gradient(#087E75 0 ${firstPercent}%, #C6DFD9 ${firstPercent}% 100%)"><div class="donut-center"><span class="donut-value">${(firstPercent).toFixed(0)}%</span><span class="donut-caption">${esc(totalLabel)}</span></div></div><div class="legend"><div class="legend-row"><i class="legend-dot"></i>${esc(firstLabel)}<strong>${fmt(firstValue)} · ${firstPercent.toFixed(1)}%</strong></div><div class="legend-row"><i class="legend-dot soft"></i>${esc(secondLabel)}<strong>${fmt(secondValue)} · ${secondPercent.toFixed(1)}%</strong></div></div></div>`;
+    }
     function bars(title, rows, labelKey, valueKey) {
       if (!rows?.length) return "";
       const max = Math.max(...rows.map(r => Number(r[valueKey]) || 0), 1);
       return `<div class="chart"><h3>${esc(title)}</h3>${rows.slice(0,12).map(r => `<div class="bar"><span>${esc(r[labelKey])}</span><span class="track"><span class="fill" style="width:${Math.max(2, (Number(r[valueKey]) || 0) / max * 100)}%"></span></span><strong>${fmt(r[valueKey])}</strong></div>`).join("")}</div>`;
     }
+    let activeView = "dashboard";
     function select(id) {
+      activeView = id;
       const chapterIndex = chapters.findIndex(chapter => chapter[0] === id);
-      const [, label, eyebrow, description] = chapters[chapterIndex];
+      const [, chapterLabel, chapterEyebrow, chapterDescription] = chapters[Math.max(chapterIndex, 0)];
+      const viewMeta = {
+        dashboard: ["Alert insights dashboard", "FINANCIAL INSIGHTS · OVERVIEW", "A clear view of alert outcomes, linked transaction activity and time-aware model validation."],
+        analytics: ["Analytics overview", "ANALYTICS · AGGREGATE TRENDS", "Explore outcome patterns and transaction mix using aggregate data only."],
+        transactions: ["Transaction activity", "TRANSACTIONS · MONTHLY SUMMARY", "Browse monthly transaction totals and linked alert counts. Individual transaction rows are never published."]
+      };
+      const [label, eyebrow, description] = viewMeta[id] || (id === "method" ? ["Model validation", chapterEyebrow, chapterDescription] : [chapterLabel, chapterEyebrow, chapterDescription]);
       document.querySelectorAll("nav button").forEach(b => {
         const active = b.dataset.id === id;
         b.classList.toggle("active", active);
         if (active) b.setAttribute("aria-current", "page");
         else b.removeAttribute("aria-current");
       });
+      viewHeading.textContent = label;
       document.querySelector("#page-eyebrow").textContent = eyebrow;
-      document.querySelector("#page-title").textContent = id === "overview" ? "What activity comes before an alert?" : label;
+      document.querySelector("#page-title").textContent = id === "dashboard" ? "Financial insights dashboard" : label;
       document.querySelector("#page-desc").textContent = description;
-      document.querySelector(".page-badge").textContent = `${String(chapterIndex + 1).padStart(2, "0")} / ${chapters.length} · Synthetic data`;
+      document.querySelector(".page-badge").textContent = id === "dashboard" || id === "analytics" || id === "transactions"
+        ? "Synthetic hackathon data"
+        : `${String(Math.max(chapterIndex + 1, 1)).padStart(2, "0")} / ${chapters.length} · Synthetic data`;
+      periodSelect.hidden = !["dashboard", "analytics", "transactions"].includes(id);
+      renderKpis();
       render(id);
     }
     function render(id) {
       const {dataset:d, quality:q, target:t, activity:a, amounts:am, recent:r, target_comparison:c, method:m} = window.report;
       let html = "";
+      if (id === "dashboard") {
+        const counts = t.counts;
+        const dismissed = counts.find(row => row.class === 0)?.count || 0;
+        const escalated = counts.find(row => row.class === 1)?.count || 0;
+        const activityRows = filteredMonthly(a.transactions_by_month);
+        const latest = activityRows.slice(-3);
+        const model = m.model_evaluation || {};
+        const monthlyTable = latest.map(row => `<tr><td>${esc(row.month)}</td><td>${fmt(row.count)}</td><td>${fmt(t.monthly.find(item => item.month === row.month)?.signals ?? "—")}</td><td><span class="status-pill">Complete</span></td></tr>`).join("");
+        html = `<div class="dashboard-grid"><section class="panel"><h3>Alert outcome mix</h3><div class="panel-sub">Labeled training alerts · descriptive distribution</div>${donutPanel("Dismissed", dismissed, "Escalated", escalated, "alerts")}<div class="panel-sub">The escalation rate is a dataset summary, not a decision threshold.</div></section><section class="panel"><h3>Transaction activity</h3><div class="panel-sub">Monthly transactions · year filter at top right</div>${monthBars(activityRows, "month", "count", 12)}<div class="panel-sub">Bars show monthly totals; see Transactions for the searchable table.</div></section></div><div class="dashboard-grid triple"><section class="panel"><h3>Incoming and outgoing</h3><div class="panel-sub">Recorded transaction direction</div>${a.directions.map(row => `<div class="direction-row"><span>${esc(row.category)}</span><span class="direction-track"><span style="width:${row.count / Math.max(...a.directions.map(item => item.count)) * 100}%${row.category.toLowerCase().includes("outgoing") ? "; background:#A8CCC4" : ""}"></span></span><strong>${fmt(row.count)}</strong></div>`).join("")}<div class="panel-sub">Direction reflects the source label; it is not net cash flow.</div></section><section class="panel"><h3>Recent alert activity</h3><div class="panel-sub">Latest daily alert counts · aggregate</div>${bars("Daily alerts", r.daily.slice(-7), "date", "signals") }<div class="panel-sub">${fmt(r.date_range_days)} days of alert-date coverage</div></section><section class="dark-panel"><h3>Forward validation</h3><div class="panel-sub">Chronological out-of-fold estimate</div><div class="dark-score">${model.oof_roc_auc?.toFixed(4) || "—"}</div><div class="dark-detail">${esc(model.model || "Selected model")}<br>${fmt(model.fold_count || 0)} forward-only folds · ${fmt(model.feature_count || 0)} features<br>Internal estimate, not a hidden-test score.</div></section></div><section class="panel"><h3>Recent monthly activity</h3><div class="panel-sub">Most recent periods in the selected year range</div><div class="table-wrap"><table><thead><tr><th>Month</th><th>Transactions</th><th>Alerts</th><th>Data scope</th></tr></thead><tbody>${monthlyTable || '<tr><td colspan="4" class="empty-state">No activity in the selected period.</td></tr>'}</tbody></table></div></section>`;
+      }
+      function updateSearch() {
+        const query = globalSearch.value.trim().toLowerCase();
+        if (!query) {
+          searchResults.classList.remove("open");
+          searchResults.innerHTML = "";
+          return;
+        }
+        const matchingViews = [...document.querySelectorAll("nav button")].filter(button => button.textContent.toLowerCase().includes(query)).slice(0, 5);
+        const matchingMonths = window.report.activity.transactions_by_month.filter(row => row.month.includes(query)).slice(0, 4);
+        const items = [
+          ...matchingViews.map(button => `<button class="search-result" role="option" data-view="${button.dataset.id}">Open ${esc(button.textContent.trim())}</button>`),
+          ...matchingMonths.map(row => `<button class="search-result" role="option" data-view="transactions" data-month="${row.month}">View ${esc(row.month)} · ${fmt(row.count)} transactions</button>`)
+        ];
+        searchResults.innerHTML = items.length ? items.join("") : '<div class="empty-state">No views or months match.</div>';
+        searchResults.classList.add("open");
+      }
+      globalSearch.addEventListener("input", updateSearch);
+      searchResults.addEventListener("click", event => {
+        const button = event.target.closest("button[data-view]");
+        if (!button) return;
+        const month = button.dataset.month;
+        globalSearch.value = month || "";
+        searchResults.classList.remove("open");
+        select(button.dataset.view);
+      });
+      globalSearch.addEventListener("keydown", event => {
+        if (event.key === "Escape") searchResults.classList.remove("open");
+        if (event.key === "Enter") {
+          const first = searchResults.querySelector("button[data-view]");
+          if (first) first.click();
+        }
+      });
+      document.addEventListener("click", event => {
+        if (!event.target.closest(".search-wrap")) searchResults.classList.remove("open");
+      });
+      periodSelect.addEventListener("change", () => render(activeView));
+      document.querySelector("#scope-button").addEventListener("click", () => {
+        select("quality");
+      });
+      if (id === "analytics") {
+        const monthly = filteredMonthly(t.monthly);
+        html = `<div class="chart-grid"><section class="panel"><h3>Escalation rate over time</h3><div class="panel-sub">Share of labeled alerts escalated by month</div>${monthBars(monthly.map(row => ({month:row.month, rate:row.escalation_rate * 100})), "month", "rate", 12, true)}</section><section class="panel"><h3>Eligible transaction activity</h3><div class="panel-sub">Monthly transaction totals after the alert-date cutoff</div>${monthBars(filteredMonthly(a.transactions_by_month), "month", "count", 12)}</section></div><div class="chart-grid"><section class="panel"><h3>Transaction direction</h3><div class="panel-sub">Incoming and outgoing records</div>${bars("Recorded direction", a.directions, "category", "count")}</section><section class="panel"><h3>Transaction type</h3><div class="panel-sub">Aggregate transaction category counts</div>${bars("Recorded transaction types", a.types, "category", "count")}</section></div><div class="callout"><b>How to read these patterns:</b> outcome and activity trends are descriptive; they do not establish causes or promise future performance.</div>`;
+      }
+      if (id === "transactions") {
+        const query = globalSearch.value.trim().toLowerCase();
+        const rows = filteredMonthly(a.transactions_by_month).filter(row => !query || row.month.includes(query));
+        html = `<section class="panel"><h3>Monthly activity</h3><div class="panel-sub">Aggregate totals only · no individual transaction rows or identifiers</div>${monthBars(filteredMonthly(a.transactions_by_month), "month", "count", 12)}<div class="table-toolbar"><span class="panel-sub">Showing ${rows.length} months</span><input class="table-search" id="month-search" type="search" placeholder="Filter by month (e.g. 2026-06)" aria-label="Filter monthly results" value="${esc(query)}"></div><div class="table-wrap"><table id="activity-table"><thead><tr><th>Month</th><th>Transactions</th><th>Alerts</th><th>Scope</th></tr></thead><tbody>${transactionTable(rows)}</tbody></table></div><div class="callout"><b>Privacy:</b> this report contains aggregate monthly counts only. Source transaction records and signal identifiers are not published.</div></section>`;
+      }
+      if (id === "method") {
+        const model = m.model_evaluation || {};
+        const folds = model.fold_auc || [];
+        const candidates = [{model:model.model || "Selected model", oof_roc_auc:model.oof_roc_auc, selected:true}, ...(model.baseline_models || []).map(item => ({...item, selected:false}))].sort((left,right) => right.oof_roc_auc - left.oof_roc_auc);
+        html = `<div class="dashboard-grid"><section class="panel"><h3>Forward-only fold performance</h3><div class="panel-sub">Each validation period follows its training history</div>${folds.map(row => `<div class="validation-row"><span>Fold ${row.fold}</span><span class="validation-track"><span style="width:${Math.min(100, row.roc_auc * 100 / .7)}%"></span></span><strong>${row.roc_auc.toFixed(4)}</strong></div>`).join("") || '<div class="empty-state">Fold details are unavailable.</div>'}<div class="panel-sub">Initial date block is warm-up only and is not scored.</div></section><section class="dark-panel"><h3>Selected model</h3><div class="panel-sub">Internal chronological validation</div><div class="dark-score">${model.oof_roc_auc?.toFixed(4) || "—"}</div><div class="dark-detail">${esc(model.model || "Selected model")}<br>${fmt(model.oof_rows || 0)} out-of-fold alerts<br>${fmt(model.feature_count || 0)} features · ${fmt(model.fold_count || 0)} folds<br>This is not a hidden-test or leaderboard result.</div></section></div><section class="panel"><h3>Model comparison</h3><div class="panel-sub">Same forward-only evaluation strategy</div>${candidates.map(row => `<div class="validation-row"><span>${esc(row.model)}${row.selected ? " · selected" : ""}</span><span class="validation-track"><span style="width:${Math.min(100, row.oof_roc_auc * 100 / .7)}%"></span></span><strong>${row.oof_roc_auc.toFixed(4)}</strong></div>`).join("")}</section><div class="callout"><b>Validation discipline:</b> five expanding chronological folds train on earlier alerts and validate on later date blocks. The warm-up block is not scored.</div>`;
+      }
       if (id === "overview") html = `<h2>Problem overview</h2><p>This project studies whether a financial signal should be escalated for review or dismissed. The report explains the data, limitations, and analysis choices; it does not score signals or serve a prediction model.</p><div class="callout"><b>Boundary:</b> the competition data are synthetic and transformed/localized. Descriptive comparisons do not establish causality or guarantee generalization.</div>${cards([["Labeled signals",d.train_signals],["Unlabeled signals",d.test_signals],["Training dates",`${d.train_date_min} – ${d.train_date_max}`]])}<p>Transaction behavior is summarized only from transactions dated on or before each linked signal date.</p>`;
       if (id === "structure") html = `<h2>Dataset structure</h2><p>Training signals contain identifiers, dates, and a binary label. Test signals contain the same signal fields without labels. Transactions link through the shared identifier.</p>${cards([["Training transactions",d.train_transaction_rows],["Test transactions",d.test_transaction_rows],["Signal fields",d.train_signal_columns.join(", ")]])}<div class="callout">Only aggregate summaries are published; signal identifiers and individual transaction rows are not included.</div>`;
       if (id === "quality") html = `<h2>Data quality and temporal relationship</h2><p>Future-dated transaction records are excluded from historical behavior summaries to avoid using information unavailable at signal time.</p>${cards([["Duplicate training IDs",q.train_signal_duplicate_ids],["Duplicate test IDs",q.test_signal_duplicate_ids],["Unmatched transaction IDs",q.transaction_signal_ids_unmatched],["Missing transaction dates",q.transaction_missing_date],["Future transactions",`${q.future_transactions} (${q.future_transaction_percent}%)`]])}`;
@@ -1433,22 +1630,20 @@
       if (id === "method") { const e = m.model_evaluation || {}; html = `<h2>Validation and model</h2><p>Model candidates were compared on expanding chronological folds: each fold trains on earlier signals and validates on a later date block.</p>${cards([["Selected model",e.model || "Shallow XGBoost"],["Features",e.feature_count],["OOF rows",e.oof_rows],["OOF ROC-AUC",e.oof_roc_auc],["Forward folds",e.fold_count]])}<p>OOF performance is an internal validation estimate, not a hidden-test or leaderboard score.</p>`; }
       if (id === "conclusion") html = `<h2>Final conclusion</h2><p>The strongest validated approach combines strict as-of-signal transaction history with interpretable count, amount, mix, recency, and calendar features. Controlled experiments favored a shallow XGBoost model on 28 features.</p><div class="callout"><b>Conclusion:</b> this static Pages report presents aggregate EDA and modeling decisions. It does not expose records or serve predictions.</div>`;
       content.innerHTML = html;
+      const monthSearch = document.querySelector("#month-search");
+      if (monthSearch) monthSearch.addEventListener("input", () => {
+        const filtered = filteredMonthly(a.transactions_by_month).filter(row => row.month.includes(monthSearch.value.trim().toLowerCase()));
+        document.querySelector("#activity-table tbody").innerHTML = transactionTable(filtered);
+        document.querySelector(".table-toolbar .panel-sub").textContent = `Showing ${filtered.length} months`;
+      });
     }
     // Keep this page self-contained: GitHub Pages can serve the report without a
     // separate JSON request (which may fail when the site is opened under a
     // project subpath or from a local file).
     try {
       window.report = JSON.parse(document.getElementById("eda-summary").textContent);
-      select("overview");
-      const d = window.report.dataset, t = window.report.target, method = window.report.method.model_evaluation || {};
-      const escalated = t.counts.find(row => row.class === 1)?.count || 0;
-      const metrics = [
-        ["Labeled Alerts", fmt(d.train_signals), "Training dataset"],
-        ["Test Alerts", fmt(d.test_signals), "Labels withheld"],
-        ["Escalation Rate", `${(escalated / Math.max(d.train_signals, 1) * 100).toFixed(1)}%`, `${fmt(escalated)} escalated`],
-        ["OOF ROC-AUC", method.oof_roc_auc?.toFixed(4) || "—", "Forward-only validation"]
-      ];
-      kpis.innerHTML = metrics.map(([label, value, sub]) => `<div class="kpi"><div class="kpi-label">${label}</div><div class="kpi-value">${value}</div><div class="kpi-sub">${sub}</div></div>`).join("");
+      renderKpis();
+      select("dashboard");
     } catch (error) {
       content.innerHTML = "<div class='callout'>The aggregate report could not be loaded. Please refresh the page.</div>";
       console.error("Could not read embedded EDA summary", error);

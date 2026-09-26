@@ -234,6 +234,41 @@ html, body, [class*="css"] { font-family: 'Inter', 'Segoe UI', sans-serif; }
 }
 .chip-dot { width:5px; height:5px; border-radius:50%; background:#2D7459; flex-shrink:0; }
 
+/* dashboard shell */
+.stApp { background:#F3F5F5; color:#202A29; }
+.block-container { max-width:1440px; padding:1rem clamp(1rem,3vw,2.6rem) 3rem; }
+[data-testid="stSidebar"] { background:#fff; border-right:1px solid #E5E9E8; }
+[data-testid="stSidebar"] * { color:#475350 !important; }
+[data-testid="stSidebarUserContent"] { padding:1rem .8rem; }
+.sb-brand { border-bottom:1px solid #E5E9E8; }
+.sb-logo { background:#087E75; }
+.sb-name { color:#202A29 !important; }
+.sb-sub { color:#87918E !important; }
+.nav-group { color:#65716E !important; }
+.nav-item { color:#475350 !important; }
+.nav-item:hover { background:#F2F7F6; color:#086E67 !important; }
+.nav-item.active { background:#064B47 !important; color:#fff !important; }
+.nav-item.active * { color:#fff !important; }
+.app-topbar { min-height:66px; display:flex; align-items:center; justify-content:space-between; gap:1rem; border-bottom:1px solid #E5E9E8; margin:0 0 1.4rem; }
+.app-welcome { color:#202A29; font-size:.98rem; font-weight:650; letter-spacing:-.025em; }
+.app-subtitle { color:#78837F; font-size:.72rem; margin-top:.15rem; }
+.app-avatar { display:grid; place-items:center; width:32px; height:32px; border:1px solid #DBE7E4; border-radius:50%; background:#EFF6F4; color:#07544F; font-size:.72rem; font-weight:750; }
+.app-pagebar { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin:0 0 1rem; }
+.app-page-title { color:#202A29; font-size:1.4rem; font-weight:580; letter-spacing:-.045em; }
+.app-page-tag { padding:.25rem .55rem; border:1px solid #E1E7E5; border-radius:5px; background:#fff; color:#687571; font-size:.66rem; }
+.stApp [data-testid="stMetric"] { border-radius:8px; border-color:#E5E9E8; box-shadow:none; }
+.stApp [data-testid="stPlotlyChart"] { border-radius:8px; border-color:#E5E9E8; box-shadow:none; }
+.stApp .s-card { border-radius:8px; border-color:#E5E9E8; box-shadow:none; }
+.stApp .callout { border-left-color:#087E75; }
+.stApp [data-testid="stRadio"] label:has(input:checked) { background:#064B47; border-color:#064B47; }
+.stApp [data-testid="stTabs"] [aria-selected="true"] { color:#07544F !important; }
+@media(max-width:720px) {
+    .app-topbar { min-height:54px; margin-bottom:1rem; }
+    .app-subtitle { display:none; }
+    .app-pagebar { align-items:flex-start; }
+    .app-page-title { font-size:1.13rem; }
+}
+
 /* responsive */
 @media(max-width:920px) {
     .kpi-strip { grid-template-columns:repeat(2,1fr); }
@@ -1234,6 +1269,20 @@ if "current_page" not in st.session_state:
 
 active = render_sidebar(st.session_state["current_page"])
 st.session_state["current_page"] = active
+
+st.markdown(f"""
+<header class="app-topbar">
+  <div>
+    <div class="app-welcome">Welcome to FinBytes</div>
+    <div class="app-subtitle">Clear, time-aware insights into alert activity</div>
+  </div>
+  <div class="app-avatar" title="FinBytes analysis">F</div>
+</header>
+<div class="app-pagebar">
+  <div class="app-page-title">{active}</div>
+  <span class="app-page-tag">Synthetic data · Aggregate only</span>
+</div>
+""", unsafe_allow_html=True)
 
 dispatch = {
     "Overview":               page_overview,

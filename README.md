@@ -72,7 +72,7 @@ The Streamlit site has its own deployment requirements. Install them into the sa
 
 Open the local URL printed by Streamlit. `eda_site/assets/eda_summary.json` contains aggregate chart data and OOF metric summaries and is used for fast app startup; rebuild it when the raw data or model artifacts change. The site identifies the competition data as synthetic. Deployment guidance is in [`eda_site/README.md`](eda_site/README.md).
 
-The aggregate report also has a static GitHub Pages entry point at `https://zuhriddinov-muhammadaziz.github.io/Finbytesedaplatform/`. In this repository, open **Settings → Pages**, select **GitHub Actions** as the build and deployment source, then rerun the **Deploy static EDA to GitHub Pages** workflow. The workflow publishes only `docs/index.html` and the aggregate summary JSON; the Streamlit app remains the local/Streamlit deployment option. GitHub Pages cannot run the Streamlit Python app itself.
+The aggregate report also has a static GitHub Pages entry point at `https://zuhriddinov-muhammadaziz.github.io/Finbytesedaplatform/`. The dashboard is a standalone responsive site with Dashboard, Analytics, Transactions, and Model Validation views, year and month filters, and search across report views and aggregate months. It uses the same white-and-teal visual system as the Streamlit app and publishes summary statistics only. GitHub Pages cannot run the Streamlit Python app itself.
 
 ## Reproduction artifacts
 

@@ -24,7 +24,7 @@ For a static GitHub Pages deployment, the repository workflow publishes `docs/in
 
 The static workflow is configured in `.github/workflows/pages.yml`. Do not describe the site as deployed until the workflow succeeds and the public URL has been checked.
 
-The GitHub Pages version is a standalone static report at `docs/index.html`; Pages cannot execute this Streamlit app. The static page mirrors the dashboard design and embeds the aggregate summary so charts, metrics, and comparison tables do not depend on a separate JSON request or a project-subpath asset URL. Keep its layout/navigation aligned with `app.py`, and refresh the embedded summary in `docs/index.html` after rebuilding `eda_site/assets/eda_summary.json`.
+The GitHub Pages version is a standalone static dashboard at `docs/index.html`; Pages cannot execute this Streamlit app. It shares the app's restrained white-and-teal dashboard styling and includes aggregate outcome charts, analytics, monthly transaction summaries, forward-validation results, year filters, and search. It embeds the aggregate summary so its charts work without a separate JSON request or project-subpath asset URL. Keep its layout and published findings aligned with `app.py`, and refresh the embedded summary in `docs/index.html` after rebuilding `eda_site/assets/eda_summary.json`.
 
 ## Contents
 
