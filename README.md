@@ -70,9 +70,9 @@ The Streamlit site has its own deployment requirements. Install them into the sa
 .venv\Scripts\python.exe -m streamlit run eda_site/app.py
 ```
 
-Open the local URL printed by Streamlit. `eda_site/assets/eda_summary.json` contains aggregate chart data and OOF metric summaries and is used for fast app startup; rebuild it when the raw data or model artifacts change. The site identifies the competition data as synthetic. The site has been verified locally, but is not deployed publicly. Deployment guidance is in [`eda_site/README.md`](eda_site/README.md).
+Open the local URL printed by Streamlit. `eda_site/assets/eda_summary.json` contains aggregate chart data and OOF metric summaries and is used for fast app startup; rebuild it when the raw data or model artifacts change. The site identifies the competition data as synthetic. Deployment guidance is in [`eda_site/README.md`](eda_site/README.md).
 
-The aggregate report also has a static GitHub Pages entry point. After the Pages workflow completes, open `https://zuhriddinov-muhammadaziz.github.io/FinBytes/`. It publishes only `docs/index.html` and the aggregate summary JSON; the Streamlit app remains the local/Streamlit deployment option.
+The aggregate report also has a static GitHub Pages entry point at `https://zuhriddinov-muhammadaziz.github.io/Finbytesedaplatform/`. In this repository, open **Settings → Pages**, select **GitHub Actions** as the build and deployment source, then rerun the **Deploy static EDA to GitHub Pages** workflow. The workflow publishes only `docs/index.html` and the aggregate summary JSON; the Streamlit app remains the local/Streamlit deployment option. GitHub Pages cannot run the Streamlit Python app itself.
 
 ## Reproduction artifacts
 
