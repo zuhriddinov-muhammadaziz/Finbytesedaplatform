@@ -233,16 +233,22 @@ def create_systematic_feature_name(base_name: str, prefix: str = "", suffix: str
 
 def safe_divide(numerator: pd.Series, denominator: pd.Series, 
                 default: float = 0.0) -> pd.Series:
-    """Safe division that handles zero denominators"""
+    """Safe division that handles zero denominators and invalid values"""
     if np.isscalar(numerator) and np.isscalar(denominator):
         if denominator == 0 or not np.isfinite(numerator) or not np.isfinite(denominator):
             return default
+        with np.errstate(divide='ignore', invalid='ignore'):
+            result = numerator / denominator
+        return result if np.isfinite(result) else default
+
+    with np.errstate(divide='ignore', invalid='ignore'):
         result = numerator / denominator
-        return result if np.isfinite(result) else default
-    result = numerator / denominator
-    if not isinstance(result, (pd.Series, pd.DataFrame)):
-        return result if np.isfinite(result) else default
-    return result.replace([np.inf, -np.inf], np.nan).fillna(default)
+
+    if isinstance(result, (pd.Series, pd.DataFrame)):
+        return result.replace([np.inf, -np.inf], np.nan).fillna(default)
+    elif isinstance(result, np.ndarray):
+        return np.where(np.isfinite(result), result, default)
+    return result if np.isfinite(result) else default
 
 
 def safe_ratio(numerator: pd.Series, denominator: pd.Series, 

@@ -89,9 +89,12 @@ class Config:
         
         # Create directories from paths
         for key, path in paths.items():
-            if key not in ['train_signals', 'test_signals', 'train_transactions', 
+            p = Path(path)
+            if p.suffix:
+                p.parent.mkdir(parents=True, exist_ok=True)
+            elif key not in ['train_signals', 'test_signals', 'train_transactions',
                           'test_transactions', 'sample_submission']:
-                Path(path).mkdir(parents=True, exist_ok=True)
+                p.mkdir(parents=True, exist_ok=True)
         
         # Create additional directories
         Path(self.config.get('paths', {}).get('artifacts', 'artifacts')).mkdir(parents=True, exist_ok=True)

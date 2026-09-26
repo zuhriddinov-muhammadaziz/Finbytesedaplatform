@@ -65,6 +65,7 @@ class BasicFeatures:
         """Apply temporal filtering to prevent future information leakage"""
         
         # Merge transactions with signal dates
+        transactions = transactions.drop(columns=[self.signal_date_col], errors='ignore')
         merged = transactions.merge(
             signals[[self.signal_id_col, self.signal_date_col]], 
             on=self.signal_id_col, 
@@ -508,7 +509,7 @@ class BasicFeatures:
         
         # Prepare test data
         test_features = features['test'].copy()
-        X_test = test_features[feature_cols].fillna(0)
+        X_test = test_features.reindex(columns=feature_cols, fill_value=0).fillna(0)
         
         logger.info(f"Prepared modeling data: {X_train.shape[1]} features")
         
