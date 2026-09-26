@@ -82,6 +82,12 @@
     .bar-fill { width:min(28px,72%); min-height:3px; border-radius:4px 4px 0 0; background:#087E75; transition:height .2s ease; }
     .bar-fill.soft { background:#9FCAC2; }
     .bar-label { color:#7D8885; font-size:.53rem; line-height:1.2; padding-bottom:6px; white-space:nowrap; }
+    .mini-bars { display:grid; gap:12px; margin:15px 0 8px; }
+    .mini-bar-row { display:grid; grid-template-columns:minmax(78px,1.15fr) minmax(40px,2fr) minmax(54px,.7fr); align-items:center; gap:9px; color:#596661; font-size:.66rem; }
+    .mini-bar-label { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .mini-bar-track { height:8px; overflow:hidden; border-radius:99px; background:#EEF2F1; }
+    .mini-bar-fill { display:block; height:100%; min-width:2px; border-radius:99px; background:linear-gradient(90deg,#087E75,#37998F); }
+    .mini-bar-value { color:#35413E; text-align:right; font-size:.63rem; font-weight:570; white-space:nowrap; }
     .dark-panel { min-height:100%; padding:17px; border-radius:8px; background:#064B47; color:#E8F2F0; }
     .dark-panel .panel-sub { color:#B8D2CE; }
     .dark-panel h3 { color:#fff; }
@@ -1519,11 +1525,19 @@
     function bars(title, rows, labelKey, valueKey) {
       if (!rows?.length) return "";
       const max = Math.max(...rows.map(r => Number(r[valueKey]) || 0), 1);
-      return `<div class="chart"><h3>${esc(title)}</h3>${rows.slice(0,12).map(r => `<div class="bar"><span>${esc(r[labelKey])}</span><span class="track"><span class="fill" style="width:${Math.max(2, (Number(r[valueKey]) || 0) / max * 100)}%"></span></span><strong>${fmt(r[valueKey])}</strong></div>`).join("")}</div>`;
+      const barsHtml = rows.slice(0,12).map(r => {
+        const value = Number(r[valueKey]) || 0;
+        const width = Math.max(value ? 1 : 0, value / max * 100);
+        return `<div class="mini-bar-row"><span class="mini-bar-label" title="${esc(r[labelKey])}">${esc(r[labelKey])}</span><span class="mini-bar-track"><span class="mini-bar-fill" style="width:${width}%"></span></span><span class="mini-bar-value">${fmt(value)}</span></div>`;
+      }).join("");
+      return `<section class="panel chart"><h3>${esc(title)}</h3><div class="mini-bars" role="img" aria-label="${esc(title)}">${barsHtml}</div></section>`;
     }
     let activeView = "dashboard";
     function select(id) {
       activeView = id;
+      if (window.location && window.history && window.location.hash !== `#${id}`) {
+        window.history.replaceState(null, "", `#${id}`);
+      }
       const chapterIndex = chapters.findIndex(chapter => chapter[0] === id);
       const [, chapterLabel, chapterEyebrow, chapterDescription] = chapters[Math.max(chapterIndex, 0)];
       const viewMeta = {
@@ -1601,6 +1615,11 @@
       document.querySelector("#scope-button").addEventListener("click", () => {
         select("quality");
       });
+      window.addEventListener("hashchange", () => {
+        const requestedView = decodeURIComponent(window.location.hash.slice(1));
+        const knownView = ["dashboard", "analytics", "transactions", "method", ...chapters.map(chapter => chapter[0])].includes(requestedView);
+        if (knownView && requestedView !== activeView) select(requestedView);
+      });
       if (id === "analytics") {
         const monthly = filteredMonthly(t.monthly);
         html = `<div class="chart-grid"><section class="panel"><h3>Escalation rate over time</h3><div class="panel-sub">Share of labeled alerts escalated by month</div>${monthBars(monthly.map(row => ({month:row.month, rate:row.escalation_rate * 100})), "month", "rate", 12, true)}</section><section class="panel"><h3>Eligible transaction activity</h3><div class="panel-sub">Monthly transaction totals after the alert-date cutoff</div>${monthBars(filteredMonthly(a.transactions_by_month), "month", "count", 12)}</section></div><div class="chart-grid"><section class="panel"><h3>Transaction direction</h3><div class="panel-sub">Incoming and outgoing records</div>${bars("Recorded direction", a.directions, "category", "count")}</section><section class="panel"><h3>Transaction type</h3><div class="panel-sub">Aggregate transaction category counts</div>${bars("Recorded transaction types", a.types, "category", "count")}</section></div><div class="callout"><b>How to read these patterns:</b> outcome and activity trends are descriptive; they do not establish causes or promise future performance.</div>`;
@@ -1627,7 +1646,6 @@
       if (id === "comparison") html = `<h2>Escalated vs dismissed comparisons</h2><p>These are unadjusted associations within labeled data, not causal effects.</p><table><tr><th>Group</th><th>Signals</th><th>Mean transactions / signal</th><th>Mean amount / signal</th></tr>${["dismissed","escalated"].map(k => `<tr><td>${esc(k)}</td><td>${fmt(c[k].signals)}</td><td>${fmt(c[k].transactions_per_signal_mean)}</td><td>${fmt(c[k].amount_per_signal_mean)}</td></tr>`).join("")}</table>`;
       if (id === "observations") html = `<h2>Key observations</h2><ul><li>${fmt(d.train_signals)} labeled and ${fmt(d.test_signals)} unlabeled signals are available.</li><li>The median eligible history is ${fmt(a.transactions_per_signal.median)} transactions per signal.</li><li>${fmt(q.future_transaction_percent)}% of linked dated training transactions are future-dated and excluded.</li><li>Escalated cases are a minority class, so ROC-AUC is used for ranking evaluation.</li><li>Label-group differences are descriptive associations, not causal effects.</li></ul>`;
       if (id === "features") html = `<h2>Feature engineering decisions</h2><p>The final model uses compact, label-free summaries available at signal time.</p><div class="callout"><b>Feature groups:</b> history and mix, amount profile, 7/30/90-day recency windows, days since last transaction, history span, and signal calendar context.</div><p>Future transactions are excluded, zero denominators are handled explicitly, and unique signal IDs are not target-encoded.</p>`;
-      if (id === "method") { const e = m.model_evaluation || {}; html = `<h2>Validation and model</h2><p>Model candidates were compared on expanding chronological folds: each fold trains on earlier signals and validates on a later date block.</p>${cards([["Selected model",e.model || "Shallow XGBoost"],["Features",e.feature_count],["OOF rows",e.oof_rows],["OOF ROC-AUC",e.oof_roc_auc],["Forward folds",e.fold_count]])}<p>OOF performance is an internal validation estimate, not a hidden-test or leaderboard score.</p>`; }
       if (id === "conclusion") html = `<h2>Final conclusion</h2><p>The strongest validated approach combines strict as-of-signal transaction history with interpretable count, amount, mix, recency, and calendar features. Controlled experiments favored a shallow XGBoost model on 28 features.</p><div class="callout"><b>Conclusion:</b> this static Pages report presents aggregate EDA and modeling decisions. It does not expose records or serve predictions.</div>`;
       content.innerHTML = html;
       const monthSearch = document.querySelector("#month-search");
@@ -1643,7 +1661,11 @@
     try {
       window.report = JSON.parse(document.getElementById("eda-summary").textContent);
       renderKpis();
-      select("dashboard");
+      const requestedView = decodeURIComponent(window.location.hash.slice(1));
+      const initialView = ["dashboard", "analytics", "transactions", "method", ...chapters.map(chapter => chapter[0])].includes(requestedView)
+        ? requestedView
+        : "dashboard";
+      select(initialView);
     } catch (error) {
       content.innerHTML = "<div class='callout'>The aggregate report could not be loaded. Please refresh the page.</div>";
       console.error("Could not read embedded EDA summary", error);
